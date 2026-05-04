@@ -1,3 +1,4 @@
+print("hi")
 import sys
 from PyQt5.QtWidgets import (
                         QApplication, QMainWindow, QLabel, QPushButton,
@@ -108,7 +109,9 @@ class ImageEditor(QMainWindow):
 
     
     def sepia_imagen(aelf):
-        pass
+        a = 1
+        if a == 1:
+            print("a = 1")
 
 app = QApplication([])
 editor = ImageEditor()
