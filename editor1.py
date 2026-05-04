@@ -2,7 +2,8 @@ print("hi")
 import sys
 from PyQt5.QtWidgets import (
                         QApplication, QMainWindow, QLabel, QPushButton,
-                        QFileDialog, QVBoxLayout, QWidget, QMessageBox
+                        QFileDialog, QVBoxLayout, QWidget, QMessageBox,
+                        QHBoxLayout
                             )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QImage
@@ -47,16 +48,19 @@ class ImageEditor(QMainWindow):
         self.sepia_button = QPushButton("sepia")
         self.sepia_button.clicked.connect(self.sepia_imagen)
 
+        buttons_layout = QHBoxLayout()
+
+
         layout = QVBoxLayout()
         layout.addWidget(self.image_Label)
-        layout.addWidget(self.open_button)
-        layout.addWidget(self.color_button)
-        layout.addWidget(self.voltear_button)
-        layout.addWidget(self.sticker_button)
-        layout.addWidget(self.grises_button)
-        layout.addWidget(self.guardar_button)
-        layout.addWidget(self.sepia_button)
-
+        buttons_layout.addWidget(self.open_button)
+        buttons_layout.addWidget(self.color_button)
+        buttons_layout.addWidget(self.voltear_button)
+        buttons_layout.addWidget(self.sticker_button)
+        buttons_layout.addWidget(self.grises_button)
+        buttons_layout.addWidget(self.guardar_button)
+        buttons_layout.addWidget(self.sepia_button)
+        layout.addLayout(buttons_layout)
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
