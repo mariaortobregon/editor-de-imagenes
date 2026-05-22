@@ -1,9 +1,7 @@
-print("hi")
 import sys
 from PyQt5.QtWidgets import (
                         QApplication, QMainWindow, QLabel, QPushButton,
-                        QFileDialog, QVBoxLayout, QWidget, QMessageBox,
-                        QHBoxLayout
+                        QFileDialog, QVBoxLayout, QWidget, QMessageBox
                             )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QImage
@@ -48,24 +46,27 @@ class ImageEditor(QMainWindow):
         self.sepia_button = QPushButton("sepia")
         self.sepia_button.clicked.connect(self.sepia_imagen)
 
-        buttons_layout = QHBoxLayout()
-
-
         layout = QVBoxLayout()
         layout.addWidget(self.image_Label)
-        buttons_layout.addWidget(self.open_button)
-        buttons_layout.addWidget(self.color_button)
-        buttons_layout.addWidget(self.voltear_button)
-        buttons_layout.addWidget(self.sticker_button)
-        buttons_layout.addWidget(self.grises_button)
-        buttons_layout.addWidget(self.guardar_button)
-        buttons_layout.addWidget(self.sepia_button)
-        layout.addLayout(buttons_layout)
+        layout.addWidget(self.open_button)
+        layout.addWidget(self.color_button)
+        layout.addWidget(self.voltear_button)
+        layout.addWidget(self.sticker_button)
+        layout.addWidget(self.grises_button)
+        layout.addWidget(self.guardar_button)
+        layout.addWidget(self.sepia_button)
+
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
         self.current_image = None 
         self.original_image = None
+        self.stickers = {
+            "estrella1": "estrella.png",
+            "estrella2": "estrella2.png",
+            "estrella3": "estrella3.png"
+        }
+        self.selected_sticker = "estrella2" #por defecto
     
     def guardar_image(self):
         
@@ -75,6 +76,7 @@ class ImageEditor(QMainWindow):
         if file_name:
             self.current_image.save(file_name)
             QMessageBox.information(self, "guardado", "Imagen Guardada Exitosamente")
+    
     def display_image(self, img):
         img = img.convert("RGB")
         max_width, max_height = self.image_Label.width(), self.image_Label.height()
@@ -109,14 +111,21 @@ class ImageEditor(QMainWindow):
         pass
 
     def sticker_imagen(self):
+
         pass
 
-    
-    def sepia_imagen(aelf):
-        a = 1
-        if a == 1:
-            print("a = 1")
+    def pegar_sticker(self, x, y):
+        print("pegar sticker ", x, y)
 
+    def mousePressEvent(self, event):
+        x = event.pos().x()
+        y = event.pos().y()
+        self.pegar_sticker(x, y)
+
+    def sepia_imagen(self):
+        if self.current_image:
+            self.current_image = image_filters.apply_sepia(self.current_image)
+            self.display_image(self.current_image)
 app = QApplication([])
 editor = ImageEditor()
 editor.show()
